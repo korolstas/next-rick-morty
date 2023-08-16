@@ -15,7 +15,8 @@ export interface Heroes {
 
 export interface AllHeroes {
   info: {
-    next: string;
+    // next: string;
+    pages: number;
   };
   results: Heroes[];
   residents: string[];

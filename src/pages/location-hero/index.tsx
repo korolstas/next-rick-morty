@@ -1,4 +1,4 @@
-import { Locaited } from "@/components/screens";
+import { Locaited } from "@/components";
 
 export default function FilteredPage() {
   return <Locaited />;

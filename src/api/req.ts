@@ -4,8 +4,10 @@ import { instance } from "./config";
 const urlBegin = "/character";
 
 export const getCharacters = {
-  getChars(page?: number) {
-    return instance.get<AllHeroes>(urlBegin, { params: { page } });
+  getChars(page: number, name: string) {
+    return instance.get<AllHeroes>(urlBegin, {
+      params: { page, name },
+    });
   },
   getSortedChars(url: string | null, search: string) {
     if (url) {

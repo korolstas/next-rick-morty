@@ -1,4 +1,4 @@
-import { setUser } from "@/store/appSlice";
+import { setUser } from "@/store/heroesSlice";
 
 export const imageHandle = ([file]: any, dispatch: any) => {
   // replace any with appropriate types
