@@ -1,16 +1,13 @@
 import { useEffect } from "react";
 import styles from "../home/home.module.less";
-import { useDebounce } from "../../../hooks/useDebounce";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
-import { soartedHeroes } from "../../../store/appSlice/ActionCreators";
-import {
-  loadedMarkerTrue,
-  loadedMarkerFalse,
-} from "../../../store/appSlice/appSlice";
-import Loader from "@/components/Loader/Loader";
-import { HeroesList } from "@/components/HeroesList/HeroesList";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { soartedHeroes } from "@/store/appSlice/ActionCreators";
+import { loadedMarkerTrue, loadedMarkerFalse } from "@/store/appSlice";
+import { Loader } from "@/components";
+import { HeroesList } from "@/components";
 
-const Search = () => {
+export const Search = () => {
   const dispatch = useAppDispatch();
   const { search, isLoadedData, isLoading, nextPageSort } = useAppSelector(
     (state) => state.appSlice
@@ -39,7 +36,7 @@ const Search = () => {
 
   useEffect(() => {
     document.addEventListener("scroll", isScrollHandler);
-    return function () {
+    return () => {
       document.removeEventListener("scroll", isScrollHandler);
     };
   }, []);
@@ -52,5 +49,3 @@ const Search = () => {
     </div>
   );
 };
-
-export default Search;

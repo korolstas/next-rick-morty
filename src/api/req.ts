@@ -1,32 +1,23 @@
-import { IAllHeroes, IHeroes } from "../types/redux-interfaces";
+import { AllHeroes, Heroes } from "../types/redux-interfaces";
 import { instance } from "./config";
 
 const urlBegin = "/character";
 
 export const getCharacters = {
-  getChars(url: string | null) {
-    if (url) {
-      const res = instance.get<IAllHeroes>(url);
-      return res;
-    } else {
-      const response = instance.get<IAllHeroes>(urlBegin);
-      return response;
-    }
+  getChars(page?: number) {
+    return instance.get<AllHeroes>(urlBegin, { params: { page } });
   },
   getSortedChars(url: string | null, search: string) {
-    const urlBegin = "/character";
     if (url) {
-      const res = instance.get<IAllHeroes>(url);
+      const res = instance.get<AllHeroes>(url);
       return res;
     } else {
-      const res = instance.get<IAllHeroes>(
-        `${urlBegin}/?page=1&name=${search}`
-      );
+      const res = instance.get<AllHeroes>(`${urlBegin}/?page=1&name=${search}`);
       return res;
     }
   },
   getLocaitedChars(url: string) {
-    const res = instance.get<IHeroes[]>(url);
+    const res = instance.get<Heroes[]>(url);
     return res;
   },
 };

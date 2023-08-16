@@ -1,7 +1,5 @@
-import React from "react";
 import { useAppSelector } from "../../hooks/redux-hooks";
-import { IHeroes } from "@/types/redux-interfaces";
-import { Card } from "../Card/Card";
+import { Card } from "../Card";
 
 export const HeroesList = () => {
   const { heroes, search, sortHeroes } = useAppSelector(
@@ -11,7 +9,7 @@ export const HeroesList = () => {
 
   return (
     <>
-      {renderHeroes.map((hero: IHeroes) => (
+      {renderHeroes.map((hero) => (
         <Card key={hero.id} hero={hero} />
       ))}
     </>

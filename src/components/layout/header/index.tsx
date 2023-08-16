@@ -1,11 +1,11 @@
 import styles from "./header.module.less";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
 import {
   clearState,
   loading,
   searcher,
   showModal,
-} from "@/store/appSlice/appSlice";
+} from "@/store/appSlice";
 import { useRouter } from "next/router";
 import { router_page } from "@/pages/routers-pages";
 import { useState } from "react";
@@ -15,7 +15,7 @@ import { LoginHeader } from "./LoginHeader";
 export const Header = () => {
   const dispatch = useAppDispatch();
   const { isUser } = useAppSelector((state) => state.appSlice);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>();
   const router = useRouter();
   const logo_name = "Rick and Morty";
 
@@ -28,9 +28,9 @@ export const Header = () => {
     router.push(router_page.home_to);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      if (searchValue.length) {
+  const handleKeyDown = ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
+    if (key === "Enter") {
+      if (searchValue?.length) {
         router.push(router_page.seacrh_to);
         dispatch(loading());
       } else router.push(router_page.home_to);
@@ -38,8 +38,8 @@ export const Header = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(target.value);
   };
 
   return (

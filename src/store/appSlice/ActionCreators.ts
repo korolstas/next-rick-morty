@@ -1,17 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getCharacters } from "../../api/req";
 
-type ISorted = {
+interface Sorted {
   nextPageSort: string | null;
   search: string;
-};
+}
 
 export const loadHeroes = createAsyncThunk(
   "heroes/load/home",
   async (nextPage: string | null, { rejectWithValue }) => {
     try {
-      const response = await getCharacters.getChars(nextPage);
-      return response.data ? response.data : response;
+      const page = Number(nextPage?.slice(nextPage?.indexOf("page=") + 5));
+      const response = await getCharacters.getChars(page);
+      return response.data;
     } catch (e: any) {
       return rejectWithValue(e.response.data.error);
     }
@@ -20,7 +21,7 @@ export const loadHeroes = createAsyncThunk(
 
 export const soartedHeroes = createAsyncThunk(
   "heroes/load/soarted",
-  async ({ nextPageSort, search }: ISorted, { rejectWithValue }) => {
+  async ({ nextPageSort, search }: Sorted, { rejectWithValue }) => {
     try {
       const response = await getCharacters.getSortedChars(
         `${nextPageSort}`,

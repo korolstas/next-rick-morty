@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAllHeroes, IHeroes } from "../../types/redux-interfaces";
+import { AllHeroes, Heroes } from "@/types/redux-interfaces";
 import {
   favoritesLoad,
   loadHeroes,
@@ -8,19 +8,19 @@ import {
   soartedHeroes,
 } from "./ActionCreators";
 
-type IHeroesState = {
+type AppState = {
   modalType: string;
   modalData: any; //change any
   isLoadedData: boolean;
   nextPage: string | null;
-  heroes: IHeroes[];
+  heroes: Heroes[];
   isLoading: boolean;
 
   // search
 
   nextPageSort: string | null;
   isSearchData: boolean;
-  sortHeroes: IHeroes[];
+  sortHeroes: Heroes[];
   error: string | null;
   prevSearch: string;
   search: string;
@@ -34,7 +34,7 @@ type IHeroesState = {
 
   urlLocation: string;
   urlHeroArray: string[];
-  localHeroes: IHeroes[];
+  localHeroes: Heroes[];
 
   //user
 
@@ -44,10 +44,10 @@ type IHeroesState = {
   name: string;
   image: string | undefined;
   arrFavoriteHeroes: number[];
-  favoriteHeroes: IHeroes[];
+  favoriteHeroes: Heroes[];
 };
 
-const initialState: IHeroesState = {
+const initialState: AppState = {
   modalType: "",
   modalData: null,
   isLoadedData: false,
@@ -216,9 +216,12 @@ export const appSlice = createSlice({
         if (!state.heroes) state.isLoading = true;
       })
       .addCase(loadHeroes.fulfilled, (state, action: PayloadAction<any>) => {
+        // debugger;s
         const result = action.payload;
         state.heroes = [...state.heroes, ...result.results];
         state.nextPage = result.info.next;
+        console.log(result.info.next);
+        
         state.isLoading = false;
         state.error = "";
       })
@@ -234,7 +237,7 @@ export const appSlice = createSlice({
       })
       .addCase(
         soartedHeroes.fulfilled,
-        (state, action: PayloadAction<IAllHeroes>) => {
+        (state, action: PayloadAction<AllHeroes>) => {
           const result = action.payload;
           state.sortHeroes = [...state.sortHeroes, ...result.results];
           state.nextPageSort = result.info.next;
@@ -271,7 +274,7 @@ export const appSlice = createSlice({
       })
       .addCase(
         requestLocation.fulfilled,
-        (state, action: PayloadAction<IHeroes[]>) => {
+        (state, action: PayloadAction<Heroes[]>) => {
           state.localHeroes = state.localHeroes.concat(action.payload);
           state.isLoading = false;
         }
@@ -288,7 +291,7 @@ export const appSlice = createSlice({
       })
       .addCase(
         favoritesLoad.fulfilled,
-        (state, action: PayloadAction<IHeroes[]>) => {
+        (state, action: PayloadAction<Heroes[]>) => {
           debugger;
           const result = action.payload;
           state.favoriteHeroes = [...result];

@@ -1,21 +1,22 @@
-export interface IForm {
-  type: string;
-  name: string;
-  className?: string;
-  placeHolder?: string;
-  label?: string;
-  accept?: string;
-}
-
-export type BySingIn = {
+interface BySingIn  {
   singInEmail: string;
   singInPassword: string;
 };
-export type BySingUp = {
+
+interface BySingUp {
   singUpName: string;
   singUpEmail: string;
   singUpPassword: string;
   singUpCheckbox: boolean;
 };
 
-export type TForm = BySingIn | BySingUp;
+export interface PropsForm {
+  type: string;
+  name: string;
+  className: string;
+  placeHolder?: string;
+  label?: string;
+  accept?: string;
+}
+
+export type UnificationForm = BySingIn | BySingUp;

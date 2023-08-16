@@ -1,41 +1,25 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
 import { headerLogout } from "../headerBtns";
-import { Button } from "@/components/Button/button";
+import { Button } from "@/components";
 import { router_page } from "@/pages/routers-pages";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import noUserImg from "../../../../../public/img/no_photo_user.png";
+import noUserImg from "@/../public/img/no_photo_user.png";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import styles from "../header.module.less";
-import { loading, setUser } from "@/store/appSlice/appSlice";
+import { loading, setUser } from "@/store/appSlice";
+import { imageHandle } from "@/helpers";
 
-type TOpenModal = {
+interface OpenModal {
   openModal: (item: string) => void;
-};
+}
 
-export const LoginHeader = ({ openModal }: TOpenModal) => {
+export const LoginHeader = ({ openModal }: OpenModal) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { name, image, id, arrFavoriteHeroes } = useAppSelector(
     (state) => state.appSlice
   );
-
-  const autorize = ({ image }: { image?: string }) =>
-    dispatch(setUser({ image }));
-
-  const imageHandle = (files: any) => {
-    const file = files;
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target ? e.target.result : null;
-      if (!result) return;
-      autorize({
-        image: result as string,
-      });
-    };
-    reader.readAsDataURL(file);
-  };
 
   const selectImageButton = () => {
     const fileInput = document.createElement("input");
@@ -44,7 +28,7 @@ export const LoginHeader = ({ openModal }: TOpenModal) => {
     fileInput.onchange = (event) => {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
-        imageHandle(file);
+        imageHandle(file, dispatch);
 
         const storage = getStorage();
         const storageRef = ref(storage, `${id}.jpg`);
@@ -76,15 +60,15 @@ export const LoginHeader = ({ openModal }: TOpenModal) => {
         item.info.label === "Favorites" ? (
           <Button
             key={item.id}
-            spanText={`${item.info.label} (${arrFavoriteHeroes.length})`}
-            className={item.info.className}
+            text={`${item.info.label} (${arrFavoriteHeroes.length})`}
+            variant={"green"}
             onClick={handleBttnClickRout}
           />
         ) : (
           <Button
             key={item.id}
-            spanText={item.info.label}
-            className={item.info.className}
+            text={item.info.label}
+            variant={"green"}
             onClick={() => openModal(item.modalType ? item.modalType : "")}
           />
         )

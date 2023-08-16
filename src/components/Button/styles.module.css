@@ -1,4 +1,4 @@
-.btn-sing-in {
+.green {
   font-family: "Bricolage Grotesque", sans-serif;
   display: flex;
   flex-direction: row;
@@ -12,7 +12,7 @@
   border: none;
   cursor: pointer;
 }
-.btn-sing-in:hover {
+.green:hover {
   border-color: #06ea4e;
   color: #06ea4e;
 }
@@ -38,7 +38,7 @@
   cursor: pointer;
   color: #06ea4e;
 }
-.modal_submit {
+.submit {
   font-family: "Bricolage Grotesque", sans-serif;
   margin-left: 10px;
   display: flex;
@@ -52,7 +52,7 @@
   transition: all 1s;
   cursor: pointer;
 }
-.modal_submit:hover {
+.submit:hover {
   border: 2px solid #06ea4e;
   color: #06ea4e;
   transition: all 1s;

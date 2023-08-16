@@ -1,11 +1,11 @@
 export const infoLogin = {
   infoSingIn: {
     header: "Sing In",
-    typeModal: "singInModal",
+    typeModal: "signInModal",
   },
   infoSingUp: {
     header: "Sing Up",
-    typeModal: "singUpModal",
+    typeModal: "signUpModal",
   },
   infoLogout: {
     header: `Do you want\nto logout?`,

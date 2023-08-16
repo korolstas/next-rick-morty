@@ -1,17 +1,17 @@
-import { Button } from "@/components/Button/button";
+import { Button } from "@/components";
 import { headerSing } from "../headerBtns";
 
-type TOpenModal = {
+interface OpenModal {
   openModal: (item: string) => void;
-};
+}
 
-export const UnLoginHeader = ({ openModal }: TOpenModal) => {
-  return headerSing.map((item) => (
+export const UnLoginHeader = ({ openModal }: OpenModal) => {
+  return headerSing.map(({ id, info, modalType }) => (
     <Button
-      key={item.id}
-      spanText={item.info.label}
-      className={item.info.className}
-      onClick={() => openModal(item.modalType ? item.modalType : "")}
+      key={id}
+      text={info.label}
+      variant={"green"}
+      onClick={() => openModal(modalType || "")}
     />
   ));
 };

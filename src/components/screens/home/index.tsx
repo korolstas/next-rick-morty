@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./home.module.less";
-import { useDebounce } from "../../../hooks/useDebounce";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux-hooks";
-import { loadHeroes } from "../../../store/appSlice/ActionCreators";
-import {
-  loadedMarkerTrue,
-  loadedMarkerFalse,
-} from "../../../store/appSlice/appSlice";
-import Loader from "@/components/Loader/Loader";
-import { HeroesList } from "@/components/HeroesList/HeroesList";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { loadHeroes } from "@/store/appSlice/ActionCreators";
+import { loadedMarkerTrue, loadedMarkerFalse } from "@/store/appSlice";
+import { Loader } from "@/components";
+import { HeroesList } from "@/components";
 
-const Home = () => {
+export const Home = () => {
   const dispatch = useAppDispatch();
 
   const { isLoadedData, nextPage, isLoading, heroes } = useAppSelector(
@@ -37,11 +34,11 @@ const Home = () => {
 
   useEffect(() => {
     makeRequest();
-  }, [isLoadedData, isLoading]);
+  }, [isLoadedData]);
 
   useEffect(() => {
     document.addEventListener("scroll", isScrollHandler);
-    return function () {
+    return () => {
       document.removeEventListener("scroll", isScrollHandler);
     };
   }, []);
@@ -54,5 +51,3 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;

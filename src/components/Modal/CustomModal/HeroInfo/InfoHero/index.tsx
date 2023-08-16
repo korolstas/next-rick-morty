@@ -1,15 +1,15 @@
-import { IHeroes } from "../../../../../types/redux-interfaces";
-import { useAppDispatch } from "../../../../../hooks/redux-hooks";
+import { Heroes } from "@/types/redux-interfaces";
+import { useAppDispatch } from "@/hooks/redux-hooks";
 import {
   clearState,
   postLocation,
   showModal,
-} from "../../../../../store/appSlice/appSlice";
+} from "@/store/appSlice";
 import styles from "./info.module.less";
 import { router_page } from "@/pages/routers-pages";
 import { useRouter } from "next/router";
 
-export const InfoHeroParams = ({ hero }: { hero: IHeroes }) => {
+export const InfoHeroParams = ({ hero }: { hero: Heroes }) => {
   const router = useRouter();
   const modalsInfo = [
     {

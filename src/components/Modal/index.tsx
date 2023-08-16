@@ -1,9 +1,9 @@
-import { HeroModal } from "./CustomModal/HeroInfo/HeroModal";
+import { HeroModal } from "./CustomModal/HeroInfo";
 import styles from "./modal.module.less";
 import { modalTypes } from "./CustomModal/modalTypes";
-import { infoLogin } from "./CustomModal/AllHeaderModal/Login/infoLogin";
-import { Login } from "./CustomModal/AllHeaderModal/Login/Login";
-import { Logout } from "./CustomModal/AllHeaderModal/Logout/Logout";
+import { infoLogin } from "./CustomModal/AllHeaderModal/infoModal";
+import { Login } from "./CustomModal/AllHeaderModal/Login";
+import { Logout } from "./CustomModal/AllHeaderModal/Logout";
 
 export const Modal = ({ modalType }: { modalType: string }) => {
   const modal = () => {

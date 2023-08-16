@@ -1,4 +1,4 @@
-interface IRoter {
+interface Roter {
   home_to: string;
   seacrh_to: string;
   location_to: string;
@@ -6,7 +6,7 @@ interface IRoter {
   error_to: string;
 }
 
-export const router_page: IRoter = {
+export const router_page: Roter = {
   home_to: "/",
   seacrh_to: "search",
   location_to: "location-hero",

@@ -1,30 +1,27 @@
-import { exit, showModal } from "../../../../../store/appSlice/appSlice";
-import { useAppDispatch } from "../../../../../hooks/redux-hooks";
-import { Button } from "../../../../Button/button";
-import sad from "../../../../../../public/img/portal.png";
+import { exit, showModal } from "@/store/appSlice";
+import { useAppDispatch } from "@/hooks/redux-hooks";
+import { Button } from "@/components";
+import sad from "@/../public/img/portal.png";
 import Image from "next/image";
 import styles from "./logout.module.less";
 import { useRouter } from "next/router";
 
-type TLogout = {
+interface Logout {
   info: {
-    modalType: string;
+    typeModal: string;
     header: string;
   };
 };
 
-export const Logout = ({ info }: TLogout) => {
+export const Logout = ({ info }: Logout) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const className = "modal_submit";
-
   const closeModal = (isExit: boolean) => {
     if (isExit) {
       dispatch(exit());
       router.push("/");
     }
-    dispatch(showModal({ visible: info.modalType }));
+    dispatch(showModal({ visible: info.typeModal }));
   };
 
   return (
@@ -35,13 +32,13 @@ export const Logout = ({ info }: TLogout) => {
         <div className={styles.modal_box_submit_btns}>
           <Button
             onClick={() => closeModal(false)}
-            spanText="No"
-            className={className}
+            text="No"
+            variant={"submit"}
           />
           <Button
             onClick={() => closeModal(true)}
-            spanText="Yes"
-            className={className}
+            text="Yes"
+            variant={"submit"}
           />
         </div>
       </div>

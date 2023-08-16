@@ -1,35 +1,32 @@
-import {
-  loading,
-  showModal,
-} from "../../../../../store/appSlice/appSlice";
-import { useAppDispatch } from "../../../../../hooks/redux-hooks";
+import { showModal } from "@/store/appSlice";
+import { useAppDispatch } from "@/hooks/redux-hooks";
 import styles from "./login.module.less";
-import { Form } from "../../../../Form/Form";
+import { Form } from "@/components";
 import { FormProvider, useForm } from "react-hook-form";
-import { TForm } from "../../../../Form/InterfaceForm";
-import { Button } from "../../../../Button/button";
+import { UnificationForm } from "@/components/Form/InterfaceForm";
+import { Button } from "@/components";
 import { SingIn, SingUp } from "./loginFunctions";
 
-type TLogin = {
+interface Login {
   info: {
     typeModal: string;
     header: string;
   };
 };
 
-export const Login = ({ info }: TLogin) => {
+export const Login = ({ info }: Login) => {
   const dispatch = useAppDispatch();
   const closeModal = () => {
     dispatch(showModal({ visible: info.typeModal }));
   };
-  const methods = useForm<TForm>();
+  const methods = useForm<UnificationForm>();
 
   const onSubmit = async (data: any) => {
     switch (info.typeModal) {
-      case "singUpModal":
+      case "signUpModal":
         SingUp(data, methods, closeModal, dispatch);
         break;
-      case "singInModal":
+      case "signInModal":
         SingIn(data, methods, closeModal, dispatch);
         break;
       default:
@@ -42,7 +39,7 @@ export const Login = ({ info }: TLogin) => {
       <div className={styles.modal}>
         <header>
           {info.header}
-          <Button onClick={closeModal} className={"cancel"} spanText="x" />
+          <Button onClick={closeModal} variant={"cancel"} text="x" />
         </header>
         <FormProvider {...methods}>
           <form

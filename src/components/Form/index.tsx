@@ -1,4 +1,4 @@
-import { FormInput } from "./FormInput/FormInput";
+import { FormInput } from "./FormInput";
 import {
   inputsSingIn,
   inputsSingUp,

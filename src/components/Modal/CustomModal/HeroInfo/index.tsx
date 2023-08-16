@@ -1,10 +1,8 @@
-import { Fragment } from "react";
-import { showModal } from "../../../../store/appSlice/appSlice";
-import { InfoHeroParams } from "./InfoHero/InfoHero";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/redux-hooks";
-
+import { showModal } from "@/store/appSlice";
+import { InfoHeroParams } from "./InfoHero";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
 import styles from "./heroModal.module.less";
-import { Button } from "@/components/Button/button";
+import { Button } from "@/components";
 
 export const HeroModal = () => {
   const dispatch = useAppDispatch();
@@ -13,9 +11,9 @@ export const HeroModal = () => {
   return (
     <div className={styles.box}>
       <Button
-        spanText="x"
+        text="x"
         onClick={() => dispatch(showModal({ visible: "heroModal" }))}
-        className={"cancel"}
+        variant={"cancel"}
       />
       <div className={styles.box_info}>
         <img src={modalData.image} alt="" />

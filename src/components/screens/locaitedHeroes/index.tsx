@@ -1,13 +1,10 @@
-import { Card } from "@/components/Card/Card";
-import { ErrorMessage } from "@/components/ErrorMessage/ErrorMassage";
-import Loader from "@/components/Loader/Loader";
+import { Card } from "@/components";
+import { ErrorMessage } from "@/components";
+import { Loader } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
 import { useDebounce } from "@/hooks/useDebounce";
-import {
-  loadedMarkerFalse,
-  setWindowError,
-} from "@/store/appSlice/appSlice";
-import { IHeroes } from "@/types/redux-interfaces";
+import { loadedMarkerFalse, setWindowError } from "@/store/appSlice";
+import { Heroes } from "@/types/redux-interfaces";
 import { useEffect } from "react";
 import styles from "../home/home.module.less";
 import {
@@ -26,6 +23,8 @@ export const Locaited = () => {
     dispatch(loadedMarkerFalse());
   }, 1000);
 
+  console.log("urlHeroArray", urlHeroArray);
+
   useEffect(() => {
     if (urlHeroArray.length) {
       dispatch(requestLocation(urlHeroArray));
@@ -38,14 +37,14 @@ export const Locaited = () => {
     makeRequest();
   }, []);
 
-  const allLocalHero = localHeroes.map((hero: IHeroes) => (
+  const allLocalHero = localHeroes.map((hero) => (
     <Card key={hero.id} hero={hero} />
   ));
 
   return (
     <div className={styles.container}>
       <div className={styles.container_modals}>
-        {isLoading ? <Loader /> : allLocalHero} : <ErrorMessage />
+        {isLoading ? <Loader /> : allLocalHero} || <ErrorMessage />
       </div>
     </div>
   );

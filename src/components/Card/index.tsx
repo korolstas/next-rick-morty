@@ -3,25 +3,23 @@ import styles from "./card.module.less";
 import {
   addFavoriteHero,
   deleteFavorite,
-  onClickBtnFavorite,
   showModal,
-} from "../../store/appSlice/appSlice";
+} from "../../store/appSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
-import { IHeroes } from "../../types/redux-interfaces";
-import noneHeart from "../../../public/img/none_heart.png";
-import heart from "../../../public/img/heart.png";
-
+import { Heroes } from "../../types/redux-interfaces";
+import noneHeart from "@/../public/img/none_heart.png";
+import heart from "@/../public/img/heart.png";
 import Image from "next/image";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { db } from "@/../firebase";
 
-export const Card = ({ hero }: { hero: IHeroes }) => {
+export const Card = ({ hero }: { hero: Heroes }) => {
   const dispatch = useAppDispatch();
   const [isClick, setIsClick] = useState<boolean>(false);
-  const { isUser, arrFavoriteHeroes, favoriteHeroes, id } = useAppSelector(
+  const { isUser, arrFavoriteHeroes, id } = useAppSelector(
     (state) => state.appSlice
   );
-  const showModalWithHeroData = (hero: IHeroes) => {
+  const showModalWithHeroData = (hero: Heroes) => {
     dispatch(showModal({ hero, modalType: "heroModal" }));
   };
 

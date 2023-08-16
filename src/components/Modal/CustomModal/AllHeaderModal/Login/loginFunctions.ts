@@ -4,38 +4,23 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { app, db } from "../../../../../../firebase";
+import { app, db } from "@/../firebase";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, getDoc } from "firebase/firestore";
 import { UseFormReturn } from "react-hook-form";
-import { TForm } from "@/components/Form/InterfaceForm";
+import { UnificationForm } from "@/components/Form/InterfaceForm";
 import {
   loadFavoritesHeroes,
   loading,
   setUser,
   setWindowError,
   setWindowSuccess,
-} from "@/store/appSlice/appSlice";
-
-const imageHandle = (files: any, dispatch: any) => {
-  const file = files && files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const result = e.target ? e.target.result : null;
-    if (!result) return;
-    dispatch(
-      setUser({
-        image: result as string,
-      })
-    );
-  };
-  reader.readAsDataURL(file);
-};
+} from "@/store/appSlice";
+import { imageHandle } from "@/helpers";
 
 export const SingUp = async (
   data: any,
-  methods: UseFormReturn<TForm, any, undefined>,
+  methods: UseFormReturn<UnificationForm, any, undefined>,
   closeModal: () => void,
   dispatch: any
 ) => {
@@ -56,7 +41,7 @@ export const SingUp = async (
           );
         })
         .catch((error) => {
-          dispatch(activeWindow(error));
+          dispatch(setWindowError(error));
         });
 
       const storage = getStorage();
@@ -80,7 +65,7 @@ export const SingUp = async (
 
 export const SingIn = async (
   data: any,
-  methods: UseFormReturn<TForm, any, undefined>,
+  methods: UseFormReturn<UnificationForm, any, undefined>,
   closeModal: () => void,
   dispatch: any
 ) => {
@@ -102,13 +87,9 @@ export const SingIn = async (
       methods.reset();
       closeModal();
       dispatch(loading());
-      dispatch(setWindowSuccess("Success sing in"));
+      dispatch(setWindowSuccess("Success sign in"));
     })
     .catch((error) => {
       dispatch(setWindowError(error));
     });
 };
-function activeWindow(error: any): any {
-  throw new Error("Function not implemented.");
-}
-

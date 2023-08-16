@@ -1,4 +1,4 @@
-import { Locaited } from "@/components/screens/locaitedHeroes/locaitedHeroes";
+import { Locaited } from "@/components/screens";
 
 export default function FilteredPage() {
   return <Locaited />;

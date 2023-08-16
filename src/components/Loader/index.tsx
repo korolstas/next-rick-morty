@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./loader.module.less";
 
-const Loader = () => {
+export const Loader = () => {
   return (
     <div className={styles.content}>
       <div className={styles.content_dot}></div>
@@ -15,5 +14,3 @@ const Loader = () => {
     </div>
   );
 };
-
-export default Loader;

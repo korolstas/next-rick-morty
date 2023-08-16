@@ -1,4 +1,4 @@
-export interface IHeroes {
+export interface Heroes {
   id: number;
   name: string;
   gender: string;
@@ -13,10 +13,10 @@ export interface IHeroes {
   isFavorite: boolean;
 }
 
-export interface IAllHeroes {
+export interface AllHeroes {
   info: {
     next: string;
   };
-  results: IHeroes[];
+  results: Heroes[];
   residents: string[];
 }

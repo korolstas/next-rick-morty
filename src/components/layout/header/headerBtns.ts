@@ -1,18 +1,18 @@
 export const headerSing = [
   {
     id: 1,
-    modalType: "singInModal",
+    modalType: "signInModal",
     info: {
-      className: "btn-sing-in",
-      label: "Sing In",
+      className: "btn-sign-in",
+      label: "Sign In",
     },
   },
   {
     id: 2,
-    modalType: "singUpModal",
+    modalType: "signUpModal",
     info: {
-      className: "btn-sing-in",
-      label: "Sing Up",
+      className: "btn-sign-in",
+      label: "Sign Up",
     },
   },
 ];
@@ -21,7 +21,7 @@ export const headerLogout = [
   {
     id: 3,
     info: {
-      className: "btn-sing-in",
+      className: "btn-sign-in",
       label: "Favorites",
     },
   },
@@ -29,7 +29,7 @@ export const headerLogout = [
     id: 4,
     modalType: "logout",
     info: {
-      className: "btn-sing-in",
+      className: "btn-sign-in",
       label: "Logout",
     },
   },
