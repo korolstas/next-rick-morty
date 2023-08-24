@@ -1,0 +1,43 @@
+@import "../../../../styles/mixins";
+
+.modal {
+  cursor: auto;
+  z-index: 80;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(4px);
+
+  &_box {
+    cursor: auto;
+    position: fixed;
+    width: 580px;
+    height: max-content;
+    background: @HeroBackHover;
+    border: 4px solid @GreenHight;
+    border-radius: 10px;
+    box-shadow: 0px 10px 75px 0px @GreenLight;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 25px;
+
+    &_info {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      img {
+        border: 4px solid @GreenHight;
+      }
+      &_modal {
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}

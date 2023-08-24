@@ -1,0 +1,15 @@
+.input {
+  font-family: "Bricolage Grotesque", sans-serif;
+  width: 50vw;
+  border: 2px solid #6de893;
+  background: #4da16859;
+  border-radius: 30px;
+  color: #6de893;
+  padding: 10px 20px;
+  font-size: 20px;
+  outline: 0 !important;
+  transition: 0.5s all;
+}
+.input:hover {
+  border: 2px solid #06ea4e;
+}
