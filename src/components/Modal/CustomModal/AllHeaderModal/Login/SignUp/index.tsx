@@ -1,21 +1,14 @@
-import { showModal } from "@store/heroesSlice";
-import { useAppDispatch } from "@hooks/redux-hooks";
-import styles from "../login.module.less";
-import { Input, Button, CheckBox } from "@components";
 import { FormProvider, useForm } from "react-hook-form";
 import { bool, object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { showModal } from "@store/heroes";
+import { useAppDispatch } from "@hooks/redux-hooks";
+import styles from "../login.module.less";
+import { Input, Button, CheckBox } from "@components";
 import { SignUpFuction } from "../loginFunctions";
-
-interface SignUp {
-  info: {
-    typeModal: string;
-    header: string;
-  };
-}
-
-const INITIAL_ERROR = "This field is requared";
-const INITIAL_ERROR_EMAIL = "This email isn't correct";
+import { INITIAL_ERROR, INITIAL_ERROR_EMAIL } from "../SignIn";
+import { Props } from "../../types";
 
 const validatioSchema = object().shape({
   signUpName: string().min(6, INITIAL_ERROR).required(INITIAL_ERROR),
@@ -28,9 +21,9 @@ const validatioSchema = object().shape({
     .required(INITIAL_ERROR),
 });
 
-export const SignUp = ({ info }: SignUp) => {
-  const dispatch = useAppDispatch();
+export const SignUp = ({ info }: Props) => {
   const privicy_text = "Yes, I agree with the Privicy policy";
+  const dispatch = useAppDispatch();
   const methods = useForm({
     defaultValues: {
       signUpName: "",
@@ -84,7 +77,6 @@ export const SignUp = ({ info }: SignUp) => {
             name={"signUpFile"}
             error={methods.formState.errors.signUpFile?.message}
             placeHolder={"File*"}
-            
           />
           <CheckBox
             name={"signUpCheck"}
@@ -92,7 +84,7 @@ export const SignUp = ({ info }: SignUp) => {
             label={privicy_text}
           />
           <div className={styles.modal_form_submit}>
-            <Button text={"Submit"} variant={'submit'} />
+            <Button text={"Submit"} variant={"submit"} />
           </div>
         </form>
       </FormProvider>

@@ -1,8 +1,8 @@
-import { useAppSelector } from "@/hooks/redux-hooks";
+import { useAppSelector } from "@hooks/redux-hooks";
 import styles from "./error.module.less";
 
 export const ErrorMessage = () => {
-  const { error } = useAppSelector((state) => state.heroesSlice);
+  const { error } = useAppSelector((state) => state.heroesReducer);
 
   if (!error) return null;
 

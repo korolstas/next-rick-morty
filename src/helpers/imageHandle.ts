@@ -1,10 +1,10 @@
-import { setUser } from "@/store/heroesSlice";
-
-export const imageHandle = ([file]: any, dispatch: any) => {
-  // replace any with appropriate types
+export const imageHandle = (
+  [file]: any,
+  dispatch: any,
+  setUser: ({}) => void
+) => {
   if (!file) return;
 
-  debugger;
   const reader = new FileReader();
   reader.onload = ({ target }) => {
     const image = target?.result || null;

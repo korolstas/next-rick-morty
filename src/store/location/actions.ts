@@ -1,15 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import { getCharacters } from "../../api/req";
 
 export const locationHeroes = createAsyncThunk(
   "heroes/load/located-arr-numbers",
-  async (urlLocation: string, { rejectWithValue }) => {
+  async (id: string | null, { rejectWithValue }) => {
     try {
-      const sizeBegin = urlLocation.indexOf("location");
-      const sizeEnd = urlLocation.length;
-      const response = await getCharacters.getLocaited(
-        urlLocation.substring(sizeBegin, sizeEnd)
-      );
+      const response = await getCharacters.getLocaitedChars(`location/${id}`);
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.response.data.error);
@@ -27,7 +24,7 @@ export const requestLocation = createAsyncThunk(
     });
 
     try {
-      const response = await getCharacters.getLocaitedHeroes(urlBegin, newUrl);
+      const response = await getCharacters.getLocaitedChars(urlBegin + newUrl);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.error);

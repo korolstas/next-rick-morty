@@ -1,12 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import heroesSlice from "./heroesSlice";
-import userSlice from "./userSlice";
-import locationSlice from "./locationSlice";
+
+import { heroesReducer } from "./heroes";
+import { locationReducer } from "./location";
+import { userReducer } from "./user";
 
 const reducer = combineReducers({
-  heroesSlice,
-  locationSlice,
-  userSlice,
+  heroesReducer,
+  locationReducer,
+  userReducer,
 });
 
 const setupStore = () => {

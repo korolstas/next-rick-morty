@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { Heroes } from "@store/heroes";
 import { favoritesLoad } from "./actions";
 import { UserState } from "./types";
@@ -73,7 +74,7 @@ const userSlice = createSlice({
       })
       .addCase(
         favoritesLoad.fulfilled,
-        (state, action: PayloadAction<Heroes[]>) => {
+        (state, action: PayloadAction<any>) => {
           const result = action.payload;
           state.favoriteHeroes = [...result];
           state.isLoading = false;

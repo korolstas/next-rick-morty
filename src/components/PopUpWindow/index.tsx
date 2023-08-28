@@ -1,20 +1,21 @@
 import { useEffect } from "react";
-import styles from "./window.module.less";
-import { useAppDispatch } from "@/hooks/redux-hooks";
-import { deletePopUpInfo } from "@/store/heroesSlice";
 import cx from "classnames";
+
+import styles from "./window.module.less";
+import { useAppDispatch } from "@hooks/redux-hooks";
+import { deletePopUpInfo } from "@store/heroes";
 
 type Variant = "success" | "error";
 
-interface PopWindow {
+interface Props {
   label: string;
   variant: Variant;
   className?: string;
 }
 
-export const PopUpWindow = ({ label, variant, className }: PopWindow) => {
+export const PopUpWindow = ({ label, variant, className }: Props) => {
   const dispatch = useAppDispatch();
-  const classNames = cx(styles[variant], className);
+  const classNames = cx(styles[variant], className, "");
 
   useEffect(() => {
     const hideErrorTimeout = setTimeout(() => {

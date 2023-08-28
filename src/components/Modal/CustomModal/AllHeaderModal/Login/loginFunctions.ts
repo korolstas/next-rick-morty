@@ -4,12 +4,13 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { app, db } from "@/../firebase";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, getDoc } from "firebase/firestore";
-import { loading, setWindowError, setWindowSuccess } from "@/store/heroesSlice";
-import { imageHandle } from "@/helpers";
-import { loadFavoritesHeroes, setUser } from "@/store/userSlice";
+
+import { app, db } from "@/../firebase";
+import { loading, setWindowError, setWindowSuccess } from "@store/heroes";
+import { imageHandle } from "@helpers";
+import { loadFavoritesHeroes, setUser } from "@store/user";
 
 export const SignUpFuction = async (
   data: any,
@@ -20,7 +21,7 @@ export const SignUpFuction = async (
 
   createUserWithEmailAndPassword(auth, data.singUpEmail, data.singUpPassword)
     .then(({ user }) => {
-      imageHandle(data.singUpImage, dispatch);
+      imageHandle(data.singUpImage, dispatch, setUser);
       updateProfile(user, {
         displayName: data.singUpName,
       })

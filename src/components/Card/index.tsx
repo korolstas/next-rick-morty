@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
-import styles from "./card.module.less";
-import { showModal } from "@/store/heroesSlice";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { Heroes } from "@/types/redux-interfaces";
-import noneHeart from "@/../public/img/none_heart.png";
-import heart from "@/../public/img/heart.png";
 import Image from "next/image";
 import { doc, setDoc } from "firebase/firestore";
+
+import styles from "./card.module.less";
+import { showModal } from "@store/heroes";
+import { useAppDispatch, useAppSelector } from "@hooks/redux-hooks";
+import { Heroes } from "@types";
+import noneHeart from "@/../public/img/none_heart.png";
+import heart from "@/../public/img/heart.png";
 import { db } from "@/../firebase";
-import { addFavoriteHero, deleteFavorite } from "@/store/userSlice";
+import { addFavoriteHero, deleteFavorite } from "@store/user";
 
 export const Card = ({ hero }: { hero: Heroes }) => {
   const dispatch = useAppDispatch();
   const [isClick, setIsClick] = useState<boolean>(false);
   const { isUser, arrFavoriteHeroes, id } = useAppSelector(
-    (state) => state.userSlice
+    (state) => state.userReducer
   );
-  const showModalWithHeroData = (hero: Heroes) => {
+  const showModalOfHero = (hero: Heroes) => {
     dispatch(showModal({ hero, modalType: "heroModal" }));
   };
 
@@ -47,7 +48,7 @@ export const Card = ({ hero }: { hero: Heroes }) => {
   }, [arrFavoriteHeroes]);
 
   return (
-    <>
+    <div onClick={() => showModalOfHero(hero)} className={styles.card}>
       {isUser && (
         <Image
           width={32}
@@ -58,12 +59,12 @@ export const Card = ({ hero }: { hero: Heroes }) => {
           alt=""
         />
       )}
-      <div  onClick={() => showModalWithHeroData(hero)} className={styles.card_info}>
+      <div className={styles.card_info}>
         <h2>{hero.name}</h2>
         <div className={styles.card_info_img}>
           <Image src={hero.image} width={200} height={200} alt="" />
         </div>
       </div>
-    </>
+    </div>
   );
 };

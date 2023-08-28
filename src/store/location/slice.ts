@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Heroes } from "@store/heroes";
 import { locationHeroes, requestLocation } from "./actions";
 import { LocationState } from "./types";
 
 const initialState: LocationState = {
-  urlLocation: "",
+  id: null,
   localHeroes: [],
   urlHeroArray: [],
   searchLocation: "",
@@ -20,14 +19,11 @@ const locationSlice = createSlice({
     clearStateLocation: (state) => {
       state.localHeroes = [];
       state.urlHeroArray = [];
-      state.urlLocation = "";
       state.isLoading = true;
       state.error = null;
     },
-
-    postLocation: (state, { payload }) => {
-      state.urlLocation = payload.url;
-      state.searchLocation = payload.value;
+    setId: (state, { payload }) => {
+      state.id = payload;
     },
   },
   extraReducers: (builder) => {
@@ -56,7 +52,7 @@ const locationSlice = createSlice({
       })
       .addCase(
         requestLocation.fulfilled,
-        (state, action: PayloadAction<Heroes[]>) => {
+        (state, action: PayloadAction<any>) => {
           state.localHeroes = state.localHeroes.concat(action.payload);
           state.isLoading = false;
         }
@@ -68,6 +64,6 @@ const locationSlice = createSlice({
   },
 });
 
-export const { postLocation, clearStateLocation } = locationSlice.actions;
+export const { clearStateLocation, setId } = locationSlice.actions;
 
 export const locationReducer = locationSlice.reducer;

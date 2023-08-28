@@ -9,4 +9,4 @@ export { CheckBox } from "./CheckBox";
 export { ErrorMessage } from "./ErrorMessage";
 export { Layout } from "./Layout";
 export { Header } from "./header";
-export { Home, Favorites, Locaited } from "./screens";
+export { InfiniteScroll } from "./InfiniteScroll";

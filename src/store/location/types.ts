@@ -1,7 +1,7 @@
 import { Heroes } from "@store/heroes";
 
 export interface LocationState {
-  urlLocation: string;
+  id: number | null;
   urlHeroArray: string[];
   localHeroes: Heroes[];
   searchLocation: string;

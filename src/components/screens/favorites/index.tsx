@@ -1,18 +1,21 @@
-import { Card } from "@/components";
-import { Loader } from "@/components";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { useDebounce } from "@/hooks/useDebounce";
-import { router_page } from "@/pages/routers-pages";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import styles from "../home/home.module.less";
-import { loadedMarkerFalse } from "@/store/heroesSlice";
-import { favoritesLoad } from "@/store/userSlice/ActionCreators";
-import { onClickBtnFavorite } from "@/store/userSlice";
+
+import { Card, Loader } from "@components";
+import { useAppDispatch, useAppSelector } from "@hooks/redux-hooks";
+import { useDebounce } from "@hooks/useDebounce";
+import { router_page } from "@pages/routers-pages";
+import styles from "../styles/page.module.less";
+import { favoritesLoad, onClickBtnFavorite } from "@store/user";
 
 export const Favorites = () => {
-  const { isLoadingUser, isUser, favoriteHeroes, isFavorite, arrFavoriteHeroes } =
-    useAppSelector((state) => state.userSlice);
+  const {
+    isLoading, 
+    isUser,
+    favoriteHeroes,
+    isFavorite,
+    arrFavoriteHeroes,
+  } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -21,7 +24,7 @@ export const Favorites = () => {
       dispatch(favoritesLoad(arrFavoriteHeroes));
       dispatch(onClickBtnFavorite(true));
     }
-    dispatch(loadedMarkerFalse());
+    // dispatch(loadedMarkerFalse());
   }, 800);
 
   useEffect(() => {
@@ -29,20 +32,17 @@ export const Favorites = () => {
   }, [arrFavoriteHeroes]);
 
   const getContent = () => {
-  const label = "You don't have favorites. Please add your favorites";
+    const label = "You don't have favorites. Please add your favorites";
 
     if (!isUser) router.push(router_page.error_to);
 
-    if (isLoadingUser) return <Loader />;
+    if (isLoading) return <Loader />;
 
     if (arrFavoriteHeroes.length === 0) return <h1>{label}</h1>;
 
     return favoriteHeroes.map((hero) => <Card key={hero.id} hero={hero} />);
   };
 
-  return (
-    <div className={styles.container_modals}>
-      {getContent()}
-    </div>
-  )
+  return <div className={styles.container_modals}>{getContent()}</div>;
 };
+

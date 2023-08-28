@@ -1,11 +1,18 @@
-import { HeroModal } from "./CustomModal/HeroInfo";
+import {
+  HeroModal,
+  Logout,
+  SignIn,
+  SignUp,
+  infoLogin,
+} from "./CustomModal";
 import styles from "./modal.module.less";
-import { modalTypes } from "./CustomModal/modalTypes";
-import { infoLogin } from "./CustomModal/AllHeaderModal/infoModal";
 
-import { Logout } from "./CustomModal/AllHeaderModal/Logout";
-import { SignIn } from "./CustomModal/AllHeaderModal/Login/SignIn";
-import { SignUp } from "./CustomModal/AllHeaderModal/Login/SignUp";
+const enum modalTypes {
+  ByHero = "heroModal",
+  BySingUp = "signUpModal",
+  BySingIn = "signInModal",
+  ByLogout = "logout",
+}
 
 export const Modal = ({ modalType }: { modalType: string }) => {
   const modal = () => {
@@ -22,5 +29,6 @@ export const Modal = ({ modalType }: { modalType: string }) => {
         return null;
     }
   };
+
   return <div className={styles.modal}>{modal()}</div>;
 };

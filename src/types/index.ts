@@ -7,6 +7,10 @@ export interface Heroes {
     name: string;
     url: string;
   };
+  origin: {
+    name: string;
+    url: string;
+  };
   image: string;
   species: string;
   isEqual: boolean;
@@ -15,7 +19,6 @@ export interface Heroes {
 
 export interface AllHeroes {
   info: {
-    // next: string;
     pages: number;
   };
   results: Heroes[];

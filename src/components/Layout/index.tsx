@@ -1,13 +1,12 @@
 import { PropsWithChildren } from "react";
-import { Header } from "@/components";
-import { Modal } from "@/components";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import { PopUpWindow } from "@/components";
+
+import { Header, Modal, PopUpWindow } from "@components";
+import { useAppSelector } from "@hooks/redux-hooks";
 import styles from "./layout.module.less";
 
 export const Layout = ({ children }: PropsWithChildren<{}>) => {
   const { modalType, windowSuccess, windowError } = useAppSelector(
-    (state) => state.heroesSlice
+    (state) => state.heroesReducer
   );
 
   return (

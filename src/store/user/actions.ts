@@ -6,7 +6,7 @@ export const favoritesLoad = createAsyncThunk(
   async (arr: number[], { rejectWithValue }) => {
     const urlBegin = "/character/";
     try {
-      const response = await getCharacters.getLocaitedHeroes(urlBegin, arr);
+      const response = await getCharacters.getLocaitedChars(urlBegin);
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.response.data.error);

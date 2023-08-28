@@ -1,11 +1,12 @@
-import { useAppSelector } from "@/hooks/redux-hooks";
+import { useAppSelector } from "@hooks/redux-hooks";
 import { Card } from "../Card";
 
 export const HeroesList = () => {
-  const { heroes, search, sortHeroes } = useAppSelector(
-    (state) => state.heroesSlice
+  const { heroes } = useAppSelector(
+    (state) => state.heroesReducer
   );
-  const renderHeroes = search.length !== 0 ? sortHeroes : heroes;
+  const sortHeroes: any[] = [];
+  const renderHeroes = sortHeroes || heroes;
 
   return (
     <>

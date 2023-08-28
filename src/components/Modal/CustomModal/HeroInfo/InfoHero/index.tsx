@@ -1,13 +1,15 @@
-import { Heroes } from "@/types/redux-interfaces";
-import { useAppDispatch } from "@/hooks/redux-hooks";
-import { clearState, showModal } from "@/store/heroesSlice";
-import styles from "./info.module.less";
-import { router_page } from "@/pages/routers-pages";
 import { useRouter } from "next/router";
-import { postLocation } from "@/store/locationSlice";
+
+import { Heroes } from "@types";
+import { useAppDispatch, useAppSelector } from "@hooks/redux-hooks";
+import {  clearInputValue, showModal } from "@store/heroes";
+import styles from "./info.module.less";
+import { clearStateLocation, setId } from "@store/location";
 
 export const InfoHeroParams = ({ hero }: { hero: Heroes }) => {
+  const { id } = useAppSelector((state) => state.locationReducer);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const modalsInfo = [
     {
       label: "Gender: ",
@@ -24,40 +26,47 @@ export const InfoHeroParams = ({ hero }: { hero: Heroes }) => {
     {
       label: "Location: ",
       value: hero.location.name,
+      url: hero.location.url,
+    },
+    {
+      label: "Origin: ",
+      value: hero.origin.name,
+      url: hero.origin.url,
     },
   ];
-  const dispatch = useAppDispatch();
 
-  const linkToLocation = () => {
-    dispatch(showModal({ visible: "heroModal" }));
-    dispatch(postLocation(hero.location.url));
-    dispatch(clearState());
-    router.push(router_page.location_to);
+  const linkToUrl = (url: string, label: string) => {
+    dispatch(showModal({ modalType: "heroModal" }));
+    const idLocation = url.split("/").filter((item: string) => item.length);
+    const beginUrl = label.toLowerCase().split(":");
+    router.push(`${beginUrl[0]}?id=${idLocation[idLocation.length - 1]}`);
+    dispatch(clearInputValue());
+    if (id !== Number(idLocation[idLocation.length - 1])) {
+      dispatch(clearStateLocation());
+      dispatch(setId(Number(idLocation[idLocation.length - 1])));
+    }
+  };
+
+  const getItems = (value: string, label: string, url?: string) => {
+    if (url)
+      return (
+        <label className={styles.link} onClick={() => linkToUrl(url, label)}>
+          {value}
+        </label>
+      );
+    return value;
   };
 
   return (
     <>
       <div className={styles.box_name}>{hero.name}</div>
 
-      {modalsInfo &&
-        modalsInfo.map((modalInfo) => (
-          <div className={styles.text} key={modalInfo.label}>
-            <b className={styles.text}>{modalInfo.label}</b>
-            {modalInfo.label
-              .toLowerCase()
-              .substring(0, modalInfo.label.length - 2) === "location" ? (
-              modalInfo.value !== "unknown" ? (
-                <label onClick={() => linkToLocation()} className={styles.link}>
-                  {modalInfo.value}
-                </label>
-              ) : (
-                modalInfo.value
-              )
-            ) : (
-              modalInfo.value
-            )}
-          </div>
-        ))}
+      {modalsInfo.map(({ label, value, url }) => (
+        <div className={styles.text} key={label}>
+          <b className={styles.text}>{label}</b>
+          {getItems(value, label, url)}
+        </div>
+      ))}
     </>
   );
 };

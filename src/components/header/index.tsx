@@ -1,24 +1,25 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import styles from "./header.module.less";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { useAppDispatch, useAppSelector } from "@hooks/redux-hooks";
+import { router_page } from "@pages/routers-pages";
+import { UnLoginHeader } from "./UnLoginHeader";
+import { LoginHeader } from "./LoginHeader";
+import { useDebounce } from "@hooks/useDebounce";
 import {
   addSearch,
   clearSearch,
   clearState,
   loading,
   showModal,
-} from "@/store/heroesSlice";
-import { useRouter } from "next/router";
-import { router_page } from "@/pages/routers-pages";
-import { useEffect, useState } from "react";
-import { UnLoginHeader } from "./UnLoginHeader";
-import { LoginHeader } from "./LoginHeader";
-import { useDebounce } from "@/hooks/useDebounce";
+} from "@store/heroes";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.heroesSlice);
-  const { isUser } = useAppSelector((state) => state.userSlice);
-  const [searchValue, setSearchValue] = useState<string>();
+  const { isLoading, search } = useAppSelector((state) => state.heroesReducer);
+  const { isUser } = useAppSelector((state) => state.userReducer);
+  const [searchValue, setSearchValue] = useState<string>(search);
   const router = useRouter();
   const logo_name = "Rick and Morty";
 
@@ -36,6 +37,10 @@ export const Header = () => {
   }, 1000);
 
   useEffect(() => {
+    setSearchValue(search);
+  }, [search]);
+
+  useEffect(() => {
     makeRequest();
   }, [searchValue]);
 
@@ -43,36 +48,34 @@ export const Header = () => {
     setSearchValue(target.value);
 
     if (!isLoading) {
-      dispatch(clearSearch());
       dispatch(loading());
+      dispatch(clearSearch());
     }
   };
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.container_logo}>
-          <div onClick={goToHome} className={styles.container_logo_link}>
-            <div className={styles.container_logo_link_decor}>{logo_name}</div>
-          </div>
-        </div>
-        <div className={styles.container_search_box}>
-          <input
-            onChange={handleChange}
-            type="text"
-            placeholder="Search character ..."
-            className={styles.container_search_box_input}
-            value={searchValue}
-          />
-        </div>
-        <div className={styles.container_btns}>
-          {isUser ? (
-            <LoginHeader openModal={openModal} />
-          ) : (
-            <UnLoginHeader openModal={openModal} />
-          )}
+    <div className={styles.container}>
+      <div className={styles.container_logo}>
+        <div onClick={goToHome} className={styles.container_logo_link}>
+          <div className={styles.container_logo_link_decor}>{logo_name}</div>
         </div>
       </div>
-    </>
+      <div className={styles.container_search_box}>
+        <input
+          onChange={handleChange}
+          type="text"
+          placeholder="Search character ..."
+          className={styles.container_search_box_input}
+          value={searchValue}
+        />
+      </div>
+      <div className={styles.container_btns}>
+        {isUser ? (
+          <LoginHeader openModal={openModal} />
+        ) : (
+          <UnLoginHeader openModal={openModal} />
+        )}
+      </div>
+    </div>
   );
 };

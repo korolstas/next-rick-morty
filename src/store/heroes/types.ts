@@ -5,18 +5,17 @@ export interface HeroesState {
   endPage: number;
   heroes: Heroes[];
   isLoading: boolean;
-  hasMore: boolean;
   error: string | null;
 
   // search
-
+  prevSearch: string | null;
   search: string;
 
   // PopUpWindow
 
   windowError: string[];
   windowSuccess: string[];
-};
+}
 
 export interface Heroes {
   id: number;

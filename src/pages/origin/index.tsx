@@ -1,5 +1,5 @@
-import { Origin } from "@components";
+import { Locaited } from "@components/screens";
 
 export default function HomePage() {
-  return <Origin />;
+  return <Locaited />;
 }

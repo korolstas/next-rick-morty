@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { AllHeroes, HeroesState } from "./types";
+import { HeroesState } from "./types";
 import { loadHeroes } from "./actions";
 
 const initialState: HeroesState = {
@@ -10,9 +10,9 @@ const initialState: HeroesState = {
   heroes: [],
   isLoading: false,
   error: null,
-  hasMore: false,
 
   // search
+  prevSearch: null,
   search: "",
 
   // PopUpWindow
@@ -28,9 +28,9 @@ const heroesSlice = createSlice({
     clearState: (state) => {
       state.modalData = null;
       state.modalType = "";
-      state.isLoading = true;
       state.heroes = [];
-      state.endPage = 1;
+      state.endPage = 0;
+      state.search = "";
     },
     loading: (state) => {
       state.isLoading = true;
@@ -38,17 +38,21 @@ const heroesSlice = createSlice({
     showModal: (state, { payload }) => {
       if (state.modalType) {
         state.modalType = "";
-        return;
+      } else {
+        if (payload.modalType === "heroModal") {
+          state.modalData = payload.hero || null;
+        }
+        state.modalType = payload.modalType;
       }
-      state.modalType = payload.modalType;
-      state.modalData = payload.hero || null;
     },
     clearError: (state) => {
       state.error = null;
     },
 
     // Search
-
+    clearInputValue: (state) => {
+      state.search = "";
+    },
     clearSearch: (state) => {
       state.heroes = [];
       state.endPage = 1;
@@ -64,9 +68,10 @@ const heroesSlice = createSlice({
       state.windowSuccess.push(payload);
     },
     setWindowError: (state, action) => {
-      if (typeof(action.payload.code) === 'string') state.windowError.push(action.payload.code);
-      if (typeof(action.payload) === 'string') state.windowError.push(action.payload);
-    
+      if (typeof action.payload.code === "string")
+        state.windowError.push(action.payload.code);
+      if (typeof action.payload === "string")
+        state.windowError.push(action.payload);
     },
     deletePopUpInfo: (state) => {
       state.windowError = [];
@@ -78,17 +83,13 @@ const heroesSlice = createSlice({
       .addCase(loadHeroes.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(
-        loadHeroes.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          const result = action.payload;
-          state.heroes = [...state.heroes, ...result.results];
-          state.hasMore = result.results.length > 0;
-          state.endPage = result.info.pages;
-          state.isLoading = false;
-          state.error = "";
-        }
-      )
+      .addCase(loadHeroes.fulfilled, (state, action: PayloadAction<any>) => {
+        const result = action.payload;
+        state.heroes = [...state.heroes, ...result.results];
+        state.endPage = result.info.pages;
+        state.isLoading = false;
+        state.error = "";
+      })
       .addCase(loadHeroes.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
@@ -98,6 +99,7 @@ const heroesSlice = createSlice({
 
 export const {
   clearSearch,
+  clearInputValue,
   addSearch,
   setWindowSuccess,
   setWindowError,

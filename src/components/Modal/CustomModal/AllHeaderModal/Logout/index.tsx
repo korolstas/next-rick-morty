@@ -1,20 +1,15 @@
-import { showModal } from "@/store/heroesSlice";
-import { useAppDispatch } from "@/hooks/redux-hooks";
-import { Button } from "@/components";
-import sad from "@/../public/img/portal.png";
 import Image from "next/image";
-import styles from "./logout.module.less";
 import { useRouter } from "next/router";
-import { exit } from "@/store/user";
 
-interface Logout {
-  info: {
-    typeModal: string;
-    header: string;
-  };
-};
+import { showModal } from "@store/heroes";
+import { useAppDispatch } from "@hooks/redux-hooks";
+import { Button } from "@components";
+import sad from "@/../public/img/portal.png";
+import styles from "./logout.module.less";
+import { exit } from "@store/user";
+import { Props } from "../types";
 
-export const Logout = ({ info }: Logout) => {
+export const Logout = ({ info }: Props) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const closeModal = (isExit: boolean) => {
