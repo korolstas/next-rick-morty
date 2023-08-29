@@ -13,7 +13,6 @@ const searchSlice = createSlice({
       state.search = payload;
     },
   },
-  extraReducers: {},
 });
 
 export const { setSearch } = searchSlice.actions;

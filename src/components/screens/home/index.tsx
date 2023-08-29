@@ -11,7 +11,10 @@ import { useAppSelector } from "@hooks/redux-hooks";
 export const Home = () => {
   const { search } = useAppSelector((state) => state.searchReducer);
   const variables = { page: 1 };
-  const { data, loading, error, fetchMore, refetch } = useQuery(
+  const { data, loading, error, fetchMore, refetch } = useQuery<{characters: {
+    results: Hero[],
+    info: any
+  }}>(
     GET_CHARACTERS,
     {
       variables,

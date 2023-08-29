@@ -1,4 +1,3 @@
-import { client } from "@graphQl";
 import { useAppSelector } from "@hooks/redux-hooks";
 import { useCallback, useRef, Fragment, useState, useEffect } from "react";
 
