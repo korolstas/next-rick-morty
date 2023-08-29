@@ -1,5 +1,5 @@
-import { Origin } from "@components";
+import { Location } from "@components";
 
 export default function HomePage() {
-  return <Origin />;
+  return <Location />;
 }

@@ -1,5 +1,5 @@
-import { Locaited } from "@components";
+import { Location } from "@components";
 
 export default function FilteredPage() {
-  return <Locaited />;
+  return <Location />;
 }

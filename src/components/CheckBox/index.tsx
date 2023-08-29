@@ -1,10 +1,10 @@
-import styles from "./checkbox.module.less";
 import {
   ControllerRenderProps,
   FieldValues,
   Controller,
 } from "react-hook-form";
-import cx from "classnames";
+
+import styles from "./checkbox.module.less";
 
 type FormFieldType = ControllerRenderProps<FieldValues, string>;
 

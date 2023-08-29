@@ -1,12 +1,11 @@
-import { Heroes } from "@/types/redux-interfaces";
-import { useAppDispatch } from "@/hooks/redux-hooks";
-import { clearState, showModal } from "@/store/heroesSlice";
-import styles from "./info.module.less";
-import { router_page } from "@/pages/routers-pages";
 import { useRouter } from "next/router";
-import { postLocation } from "@/store/locationSlice";
+import { observer } from "mobx-react-lite";
 
-export const InfoHeroParams = ({ hero }: { hero: Heroes }) => {
+import { Heroes } from "@types";
+import styles from "./info.module.less";
+import { useStore } from "@mobx";
+
+const Component = ({ hero }: { hero: Heroes }) => {
   const router = useRouter();
   const modalsInfo = [
     {
@@ -24,15 +23,33 @@ export const InfoHeroParams = ({ hero }: { hero: Heroes }) => {
     {
       label: "Location: ",
       value: hero.location.name,
+      url: hero.location.url,
+    },
+    {
+      label: "Origin: ",
+      value: hero.origin.name,
+      url: hero.origin.url,
     },
   ];
-  const dispatch = useAppDispatch();
 
-  const linkToLocation = () => {
-    dispatch(showModal({ visible: "heroModal" }));
-    dispatch(postLocation(hero.location.url));
-    dispatch(clearState());
-    router.push(router_page.location_to);
+  const { heroStore } = useStore();
+  const { showModal } = heroStore;
+
+  const linkToUrl = (url: string, label: string) => {
+    showModal({ modalType: "heroModal" });
+    const idLocation = url.split("/").filter((item: string) => item.length);
+    const beginUrl = label.toLowerCase().split(":");
+    router.push(`${beginUrl[0]}?id=${idLocation[idLocation.length - 1]}`);
+  };
+
+  const getItems = (value: string, label: string, url?: string) => {
+    if (url)
+      return (
+        <label className={styles.link} onClick={() => linkToUrl(url, label)}>
+          {value}
+        </label>
+      );
+    return value;
   };
 
   return (
@@ -40,24 +57,14 @@ export const InfoHeroParams = ({ hero }: { hero: Heroes }) => {
       <div className={styles.box_name}>{hero.name}</div>
 
       {modalsInfo &&
-        modalsInfo.map((modalInfo) => (
-          <div className={styles.text} key={modalInfo.label}>
-            <b className={styles.text}>{modalInfo.label}</b>
-            {modalInfo.label
-              .toLowerCase()
-              .substring(0, modalInfo.label.length - 2) === "location" ? (
-              modalInfo.value !== "unknown" ? (
-                <label onClick={() => linkToLocation()} className={styles.link}>
-                  {modalInfo.value}
-                </label>
-              ) : (
-                modalInfo.value
-              )
-            ) : (
-              modalInfo.value
-            )}
+        modalsInfo.map(({ value, label, url }) => (
+          <div className={styles.text} key={label}>
+            <b className={styles.text}>{label}</b>
+            {getItems(value, label, url)}
           </div>
         ))}
     </>
   );
 };
+
+export const InfoHeroParams = observer(Component);

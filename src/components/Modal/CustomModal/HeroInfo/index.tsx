@@ -1,26 +1,31 @@
-import { showModal } from "@/store/heroesSlice";
-import { InfoHeroParams } from "./InfoHero";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import styles from "./heroModal.module.less";
-import { Button } from "@/components";
+import { observer } from "mobx-react-lite";
 
-export const HeroModal = () => {
-  const dispatch = useAppDispatch();
-  const { modalData } = useAppSelector((state) => state.heroesSlice);
+import { InfoHeroParams } from "./InfoHero";
+import styles from "./heroModal.module.less";
+import { Button } from "@components";
+import { useStore } from "@mobx";
+
+const Component = () => {
+  const { heroStore } = useStore();
+  const { modalData, showModal } = heroStore;
 
   return (
-    <div className={styles.box}>
-      <Button
-        text="x"
-        onClick={() => dispatch(showModal({ visible: "heroModal" }))}
-        variant={"cancel"}
-      />
-      <div className={styles.box_info}>
-        <img src={modalData.image} alt="" />
-        <div className={styles.box_info_modal}>
-          <InfoHeroParams hero={modalData} />
+    modalData && (
+      <div className={styles.box}>
+        <Button
+          text="x"
+          onClick={() => showModal({ modalType: "heroModal" })}
+          variant={"cancel"}
+        />
+        <div className={styles.box_info}>
+          <img src={modalData?.image} alt="" />
+          <div className={styles.box_info_modal}>
+            <InfoHeroParams hero={modalData} />
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 };
+
+export const HeroModal = observer(Component);

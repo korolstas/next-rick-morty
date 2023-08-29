@@ -17,6 +17,8 @@
     "dotenv": "^16.3.1",
     "firebase": "^10.1.0",
     "lodash-es": "^4.17.21",
+    "mobx": "^6.10.0",
+    "mobx-react-lite": "^4.0.3",
     "next": "13.4.12",
     "next-redux-wrapper": "^8.1.0",
     "next-with-less": "^3.0.1",

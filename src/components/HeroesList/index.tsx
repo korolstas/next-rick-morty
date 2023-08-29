@@ -1,17 +1,19 @@
-import { useAppSelector } from "@/hooks/redux-hooks";
-import { Card } from "../Card";
+import { observer } from "mobx-react-lite";
 
-export const HeroesList = () => {
-  const { heroes, search, sortHeroes } = useAppSelector(
-    (state) => state.heroesSlice
-  );
-  const renderHeroes = search.length !== 0 ? sortHeroes : heroes;
+import { useStore } from "@mobx";
+import { Card } from "@components";
+
+export const Component = () => {
+  const { heroStore } = useStore();
+  const { data } = heroStore;
 
   return (
     <>
-      {renderHeroes.map((hero) => (
+      {data.map((hero) => (
         <Card key={hero.id} hero={hero} />
       ))}
     </>
   );
 };
+
+export const HeroesList = observer(Component);

@@ -1,1 +1,0 @@
-export { imageHandle } from "./imageHandle";

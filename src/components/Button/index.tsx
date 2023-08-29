@@ -1,4 +1,5 @@
 import cx from "classnames";
+
 import styles from "./styles.module.less";
 
 type Variant = "cancel" | "green" | "submit";

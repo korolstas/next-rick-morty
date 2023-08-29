@@ -1,26 +1,31 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
-import { loadHeroes } from "@/store/heroesSlice/ActionCreators";
-import { Card, ErrorMessage, Loader } from "@/components";
-import { LoadedData } from "@components/LoadedData";
+import { observer } from "mobx-react-lite";
 
-export const Home = () => {
-  const dispatch = useAppDispatch();
-  const { error, search, heroes, isLoading } = useAppSelector(
-    (state) => state.heroesSlice
-  );
+import { Card, Loader, InfiniteScroll } from "@components";
+import { useStore } from "@mobx";
+import styles from "../styles/styles.module.less";
 
-  const fetchData = (page: number) => dispatch(loadHeroes({ page, search }));
+const Component = () => {
+  const { heroStore } = useStore();
+  const { fetchHero, search, isLoading, data, error, maxPage } = heroStore;
+
+  const fetchData = (page: number) => fetchHero({ page, search });
 
   return (
-    <>
-      <LoadedData
-        data={heroes}
-        isLoading={isLoading}
-        fetchMore={(nextPage) => fetchData(nextPage)}
-        renderItem={(item) => <Card hero={item} />}
-      />
-      {isLoading && <Loader />}
-      {error && <ErrorMessage />}
-    </>
+    <div className={styles.container}>
+      <div className={styles.container_modals}>
+        <InfiniteScroll
+          data={data}
+          search={search}
+          maxPage={maxPage}
+          isLoading={isLoading}
+          fetchMore={fetchData}
+          renderItem={(item) => <Card hero={item} />}
+        />
+        {isLoading && <Loader />}
+        {error && <span>{error}</span>}
+      </div>
+    </div>
   );
 };
+
+export const Home = observer(Component);

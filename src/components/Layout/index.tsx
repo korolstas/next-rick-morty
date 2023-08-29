@@ -1,14 +1,12 @@
 import { PropsWithChildren } from "react";
-import { Header } from "@/components";
-import { Modal } from "@/components";
-import { useAppSelector } from "@/hooks/redux-hooks";
-import { PopUpWindow } from "@/components";
-import styles from "./layout.module.less";
+import { observer } from "mobx-react-lite";
 
-export const Layout = ({ children }: PropsWithChildren<{}>) => {
-  const { modalType, windowSuccess, windowError } = useAppSelector(
-    (state) => state.heroesSlice
-  );
+import { Header, Modal } from "@components";
+import { useStore } from "@mobx";
+
+const Component = ({ children }: PropsWithChildren<{}>) => {
+  const { heroStore } = useStore();
+  const { modalType } = heroStore;
 
   return (
     <>
@@ -17,16 +15,8 @@ export const Layout = ({ children }: PropsWithChildren<{}>) => {
       <Header />
 
       {children}
-
-      <div className={styles.window_list}>
-        {windowSuccess?.map((item, id) => (
-          <PopUpWindow key={id} label={item} variant={"success"} />
-        ))}
-
-        {windowError?.map((item, id) => (
-          <PopUpWindow key={id} label={item} variant={"error"} />
-        ))}
-      </div>
     </>
   );
 };
+
+export const Layout = observer(Component);
