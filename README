@@ -1,1 +1,6 @@
 NEXT TEST RICK AND MORTY
+
+This repository consists of three branches using different technologies:
+1. Graqh-ql (Next.js, Typescript)
+2. mobx (Next.js, Typescript)
+3. redux (Next.js, Typescript)
